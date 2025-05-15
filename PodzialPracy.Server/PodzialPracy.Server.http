@@ -1,0 +1,6 @@
+@PodzialPracy.Server_HostAddress = http://localhost:5136
+
+GET {{PodzialPracy.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
