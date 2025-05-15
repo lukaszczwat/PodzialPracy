@@ -7,6 +7,8 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "podzialpracy.client", "podz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodzialPracy.Server", "PodzialPracy.Server\PodzialPracy.Server.csproj", "{B3C29B26-66B3-4C72-9FF5-6EE910B148F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodzialPracy.Test", "PodzialPracy.Test\PodzialPracy.Test.csproj", "{7338C784-18D2-4AAE-A05B-4D3A2B8B908C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B3C29B26-66B3-4C72-9FF5-6EE910B148F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3C29B26-66B3-4C72-9FF5-6EE910B148F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3C29B26-66B3-4C72-9FF5-6EE910B148F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7338C784-18D2-4AAE-A05B-4D3A2B8B908C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7338C784-18D2-4AAE-A05B-4D3A2B8B908C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7338C784-18D2-4AAE-A05B-4D3A2B8B908C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7338C784-18D2-4AAE-A05B-4D3A2B8B908C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
