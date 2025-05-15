@@ -7,6 +7,7 @@ namespace PodzialPracy.Server.Modele
     {
         public int Id { get; set; }
         public string Tresc { get; set; }
+        public int SkalaTrudnosci { get; set; }
         public TaskType Rodzaj { get; set; }
         public TaskStatus Status { get; set; }
 
