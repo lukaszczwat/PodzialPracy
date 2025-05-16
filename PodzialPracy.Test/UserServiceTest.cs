@@ -20,14 +20,14 @@ namespace PodzialPracy.Test
         [Fact]
         public void GetUsers_ReturnsUserList()
         {
-            var mockUsers = new List<User> { new User { Id = 1, Imie = "Jan ", Nazwisko = "Kowalski", Typ = UserType.Programista } };
+            var mockUsers = new List<User> { new User { Id = 1, Imie = "Jan", Nazwisko = "Kowalski", Typ = UserType.Programista } };
             _userRepositoryMock.Setup(repo => repo.GetAllUsers()).Returns(mockUsers);
 
             var result = _userService.GetAllUsers();
 
             Assert.NotNull(result);
             Assert.Single(result);
-            Assert.Equal("Jan", result.First().Imie);
+            Assert.Equal("Kowalski", result.First().Nazwisko);
         }
 
     }

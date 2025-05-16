@@ -1,26 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PodzialPracy.Server.Controllers;
+using PodzialPracy.Server.Repozytoria;
 using PodzialPracy.Server.Serwis;
 
 namespace PodzialPracy.Test
 {
     public class TaskControllerTest
     {
-        private readonly Mock<TaskSerwice> _taskServiceMock;
+        private readonly Mock<ITaskRepository> _taskRepositoryMock;
         private readonly TaskController _taskController;
 
 
         public TaskControllerTest()
         {
-            this._taskServiceMock = new Mock<TaskSerwice>();
-            this._taskController = new TaskController(_taskServiceMock.Object);
+            _taskRepositoryMock = new Mock<ITaskRepository>();
+            var taskService = new TaskSerwice(_taskRepositoryMock.Object);
+            _taskController = new TaskController(taskService);
         }
 
         [Fact]
         public void GetAllTasks_ReturnsOkResult()
         {
-            _taskServiceMock.Setup(service => service.GetAllTasks()).Returns(new List<Server.Modele.Task>());
+            var expectedTasks = new List<PodzialPracy.Server.Modele.Task>();
+            _taskRepositoryMock.Setup(repo => repo.GetAllTasks()).Returns(expectedTasks);
+
 
             var result = _taskController.GetAllTasks();
 
