@@ -1,4 +1,20 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+<div class="container">
+  <header>
+    <h1>System zarządzania zadaniami</h1>
+  </header>
+
+  <app-user-select (userSelected)="onUserSelected($event)"></app-user-select>
+
+  <div class="task-panel">
+    <app-task-list-assigned [tasks]="assignedTasks"></app-task-list-assigned>
+    <app-task-list-available [tasks]="availableTasks" (taskSelect)="onTaskSelect($event)"></app-task-list-available>
+  </div>
+
+  <app-task-assign-form [selectedTasks]="selectedTasks" [userId]="selectedUser?.id"></app-task-assign-form>
+</div>
+
+
+<!--<h1 id="tableLabel">Weather forecast</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -21,4 +37,4 @@
             <td>{{ forecast.summary }}</td>
         </tr>
     </tbody>
-</table>
+</table>-->

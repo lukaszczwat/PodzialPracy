@@ -1,38 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { User } from './models/user.model';
+import { Task } from './models/task.model';
+import { TaskService } from './services/task.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  selectedUser!: User;
+  availableTasks: Task[] = [];
+  selectedTasks: Task[] = [];
+  assignedTasks: Task[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private taskService: TaskService) { }
 
-  ngOnInit() {
-    this.getForecasts();
+  ngOnInit(): void {
+    this.availableTasks = this.taskService.getAllTasks();
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  onUserSelected(user: User) {
+    this.selectedUser = user;
   }
 
-  title = 'podzialpracy.client';
+  onTaskSelect(task: Task) {
+    if (!this.selectedTasks.includes(task)) {
+      this.selectedTasks.push(task);
+    }
+  }
 }
