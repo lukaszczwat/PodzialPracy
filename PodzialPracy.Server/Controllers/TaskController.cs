@@ -5,6 +5,11 @@ using PodzialPracy.Server.Transfer;
 
 namespace PodzialPracy.Server.Controllers
 {
+    /// <summary>
+    /// Kontroler API do zarządzania zadaniami.
+    /// Odpowiada za pobieranie i przypisywanie zadań użytkownikom.
+    /// </summary>
+
     [Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -12,11 +17,22 @@ namespace PodzialPracy.Server.Controllers
     {
         private readonly TaskSerwice _taskService;
 
+        /// <summary>
+        /// Inicjalizuje kontroler z serwisem zadań.
+        /// </summary>
+        /// <param name="taskService">Instancja serwisu zadań</param>
+        /// 
+
         public TaskController(TaskSerwice taskService)
         {
             _taskService = taskService;
         }
 
+
+        /// <summary>
+        /// Pobiera dostępne zadania do przypisania.
+        /// </summary>
+        /// <returns>Lista dostępnych zadań</returns>
         [HttpGet("GetAllTasks")]
         public IActionResult GetAllTasks()
         {
@@ -24,12 +40,22 @@ namespace PodzialPracy.Server.Controllers
             return Ok(tasks);
         }
 
+        /// <summary>
+        /// Pobiera listę zadań przypisanych do danego użytkownika.
+        /// </summary>
+        /// <returns>Lista dostępnych zadań</returns>
+
         [HttpGet("GetTasksByUser/{userId}")]
         public IActionResult GetTasksByUser(int userId)
         {
             var tasks = _taskService.GetTasksByUser(userId);
             return Ok(tasks);
         }
+
+        /// <summary>
+        /// Przypisuje użytkownikowi podaną listę zadań.
+        /// Waliduje liczbę zadań i ich typy przed przypisaniem.
+        /// </summary>
 
         [HttpPost("PrypisanieTask/{userId}")]
         public IActionResult PrypisanieTask(int userId, [FromBody] PrzypisanieTask przypisanieTask)

@@ -3,8 +3,16 @@ using TaskStatus = PodzialPracy.Server.Enum.TaskStatus;
 
 namespace PodzialPracy.Server.Data
 {
+    /// <summary>
+    /// Dane mockowe do testów.
+    /// </summary>
+    /// 
+
     public class DataMock
     {
+        /// <summary>
+        /// Zwraca listę zadań do testów.
+        /// </summary>  
         public static List<Modele.Task> GetMockTasks()
         {
             return new List<Modele.Task>
@@ -135,6 +143,11 @@ namespace PodzialPracy.Server.Data
 
         }
 
+
+        /// <summary>
+        /// Zwraca listę użytkowników do testów.
+        /// </summary>
+        /// 
         public static List<Modele.User> GetMockUsers()
         {
             return new List<Modele.User>
