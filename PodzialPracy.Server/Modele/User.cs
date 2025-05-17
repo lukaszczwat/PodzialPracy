@@ -12,6 +12,6 @@ namespace PodzialPracy.Server.Modele
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
         public UserType Typ { get; set; }
-
+                
     }
 }

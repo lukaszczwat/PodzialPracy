@@ -1,7 +1,13 @@
 <h3>Wybierz użytkownika</h3>
 <ul>
   <li *ngFor="let user of users">
-    {{ user.imie }} {{ user.nazwisko }} ({{ user.typ }})
+    {{ user.imie }} {{ user.nazwisko }}
     <button (click)="selectUser(user)">Wybierz</button>
   </li>
 </ul>
+<!--<ul>
+  <li *ngFor="let user of users">
+    {{ user.imie }} {{ user.nazwisko }} ({{ user.typ }})
+    <button (click)="selectUser(user)">Wybierz</button>
+  </li>
+</ul>-->

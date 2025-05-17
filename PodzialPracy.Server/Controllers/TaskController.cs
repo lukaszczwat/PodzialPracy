@@ -10,7 +10,7 @@ namespace PodzialPracy.Server.Controllers
     /// Odpowiada za pobieranie i przypisywanie zadań użytkownikom.
     /// </summary>
 
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class TaskController : ControllerBase
@@ -36,8 +36,19 @@ namespace PodzialPracy.Server.Controllers
         [HttpGet("GetAllTasks")]
         public IActionResult GetAllTasks()
         {
-            var tasks = _taskService.GetAllTasks();
-            return Ok(tasks);
+            Console.WriteLine("Wejście do GetAllTasks");
+
+            try
+            {
+                var tasks = _taskService.GetAllTasks();
+                Console.WriteLine($"Zwracane zadania: {tasks.Count()}");
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd serializacji lub wykonania: " + ex.Message);
+                return BadRequest("Błąd podczas pobierania zadań.");
+            }
         }
 
         /// <summary>
@@ -57,7 +68,7 @@ namespace PodzialPracy.Server.Controllers
         /// Waliduje liczbę zadań i ich typy przed przypisaniem.
         /// </summary>
 
-        [HttpPost("PrypisanieTask/{userId}")]
+        [HttpPost("PrzypisanieTask/{userId}")]
         public IActionResult PrypisanieTask(int userId, [FromBody] PrzypisanieTask przypisanieTask)
         {
             try

@@ -36,7 +36,7 @@ namespace PodzialPracy.Server.Repozytoria
         /// <returns>Lista przypisanych zadań</returns>
         public IEnumerable<Modele.Task> GetTasksByUser(int userId)
         {
-            return _tasks.Where(t => t.Status == Enum.TaskStatus.DoWykonania && t.Id == userId)
+            return _tasks.Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.SkalaTrudnosci)
                 .Take(10);
         }
@@ -55,7 +55,9 @@ namespace PodzialPracy.Server.Repozytoria
             {
                 if (_tasks.Any(t => t.Id == task.Id)) return false;
                 {
-                    task.Status = Enum.TaskStatus.Wykonane;
+                    var targetTask = _tasks.First(t => t.Id == task.Id);
+                    targetTask.Status = Enum.TaskStatus.Wykonane;
+                    targetTask.UserId = userId; 
                 }
             }
 

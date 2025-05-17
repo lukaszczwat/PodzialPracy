@@ -1,3 +1,6 @@
-<h3>Formularz przypisywania zadań</h3>
-<p>Wybrano {{ selectedTasks.length }} zadań</p>
-<button (click)="assignTasks()">Przypisz zadania</button>
+<h3>Przypisywanie zadań</h3>
+
+<label for="termin">Wybierz termin realizacji:</label>
+<input type="date" id="termin" [(ngModel)]="terminRealizacji">
+
+<button (click)="przypisanieTasks(userId)">Przypisz zadania</button>

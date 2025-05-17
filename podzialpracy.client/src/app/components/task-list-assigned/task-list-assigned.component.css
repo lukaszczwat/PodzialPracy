@@ -1,2 +1,11 @@
-body {
+.task-list {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.task-item {
+  padding: 8px;
+  margin: 5px 0;
+  border-bottom: 1px solid #ddd;
 }

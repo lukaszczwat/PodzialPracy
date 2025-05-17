@@ -14,7 +14,8 @@ namespace PodzialPracy.Server.Modele
         public int SkalaTrudnosci { get; set; }
         public TaskType Rodzaj { get; set; }
         public TaskStatus Status { get; set; }
+        public DateTime? TerminWdrozenia { get; set; }
 
-
+        public int? UserId { get; set; }
     }
 }

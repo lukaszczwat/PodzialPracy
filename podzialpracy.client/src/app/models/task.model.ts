@@ -15,5 +15,5 @@ export interface Task {
   skalaTrudnosci: number;
   rodzaj: TaskType;
   status: TaskStatus;
-
+  terminRealizacji?: Date;
 }

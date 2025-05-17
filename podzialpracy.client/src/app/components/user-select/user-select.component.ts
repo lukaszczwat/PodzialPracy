@@ -1,22 +1,29 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-select',
   templateUrl: './user-select.component.html',
   styleUrls: ['./user-select.component.css'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class UserSelectComponent {
   users: User[] = [];
 
   @Output() userSelected = new EventEmitter<User>();
 
-  constructor(private userService: UserService) {
-    this.users = this.userService.getUsers();
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
   }
 
-  selectUser(user: User) {
+  selectUser(user: User): void {
     this.userSelected.emit(user);
   }
 }
