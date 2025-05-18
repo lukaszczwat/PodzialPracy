@@ -1,13 +1,9 @@
 <h3>Wybierz użytkownika</h3>
-<ul>
-  <li *ngFor="let user of users">
-    {{ user.imie }} {{ user.nazwisko }}
-    <button (click)="selectUser(user)">Wybierz</button>
+<ol>
+  <li *ngFor="let user of users"
+      (click)="selectUser(user)"
+      [class.selected]="selectedUser?.id === user.id">
+    <strong>{{ user.imie }} {{ user.nazwisko }}</strong>
+    <span class="user-role">({{ user.typ }})</span>
   </li>
-</ul>
-<!--<ul>
-  <li *ngFor="let user of users">
-    {{ user.imie }} {{ user.nazwisko }} ({{ user.typ }})
-    <button (click)="selectUser(user)">Wybierz</button>
-  </li>
-</ul>-->
+</ol>

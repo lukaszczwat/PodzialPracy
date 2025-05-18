@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-user-select',
   templateUrl: './user-select.component.html',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UserSelectComponent {
   users: User[] = [];
+  selectedUser?: User;
 
   @Output() userSelected = new EventEmitter<User>();
 
@@ -24,6 +26,7 @@ export class UserSelectComponent {
   }
 
   selectUser(user: User): void {
+    this.selectedUser = user;
     this.userSelected.emit(user);
   }
 }

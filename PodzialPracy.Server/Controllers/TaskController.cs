@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PodzialPracy.Server.Serwis;
 using PodzialPracy.Server.Transfer;
+using System.Text.Json;
 
 namespace PodzialPracy.Server.Controllers
 {
@@ -34,13 +36,14 @@ namespace PodzialPracy.Server.Controllers
         /// </summary>
         /// <returns>Lista dostępnych zadań</returns>
         [HttpGet("GetAllTasks")]
-        public IActionResult GetAllTasks()
+        public IActionResult GetAllTasks(int page = 1, int pageSize = 10)
         {
+            Console.WriteLine($"GetAllTasks() — page: {page}, pageSize: {pageSize}");
             Console.WriteLine("Wejście do GetAllTasks");
 
             try
             {
-                var tasks = _taskService.GetAllTasks();
+                var tasks = _taskService.GetAllTasks(page, pageSize);
                 Console.WriteLine($"Zwracane zadania: {tasks.Count()}");
                 return Ok(tasks);
             }
@@ -73,11 +76,13 @@ namespace PodzialPracy.Server.Controllers
         {
             try
             {
+                Console.WriteLine("Otrzymany payload: " + JsonSerializer.Serialize(przypisanieTask));
                 var result = _taskService.PrypisanieTask(przypisanieTask.UserId, przypisanieTask.Tasks);
                 return Ok(result);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
+                Console.WriteLine("Błąd przy przypisaniu: " + ex.ToString()); 
                 return BadRequest(ex.Message);
             }
         }

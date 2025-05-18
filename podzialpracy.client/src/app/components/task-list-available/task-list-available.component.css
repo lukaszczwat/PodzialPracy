@@ -1,17 +1,7 @@
-ul {
-  padding: 0;
-  list-style-type: none;
-}
 
-li {
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin-bottom: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
+.selected {
+  background-color: #e6ffe6;
+  border-left: 4px solid #2b8a3e;
+  font-weight: bold;
+  padding-left: 8px;
 }
-
-  li:hover {
-    background: #f0f0f0;
-  }

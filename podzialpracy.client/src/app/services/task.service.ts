@@ -17,17 +17,26 @@ export class TaskService {
     { id: 2, tresc: 'Konfiguracja serwera', skalaTrudnosci: 3, rodzaj: TaskType.Maintanance, status: TaskStatus.DoWykonania },
   ];
 
-  getAllTasks(): Observable<Task[]> {
-    //return this.mockTasks.filter(t => t.status === TaskStatus.DoWykonania).sort((a, b) => b.skalaTrudnosci - a.skalaTrudnosci).slice(0, 10);
-    return this.http.get<Task[]>(`${this.apiUrl}/GetAllTasks`);
+ 
+
+  getAllTasks(page: number = 1, pageSize: number = 10): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/GetAllTasks?page=${page}&pageSize=${pageSize}`);
   }
 
   setTerminRealizacji(taskId: number, termin: Date): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/SetTerminRealizacji/${taskId}`, termin);
   }
 
-  przypisanieTasks(userId: number, tasks: Task[]): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/PrzypisanieTask/${userId}`, { userId, tasks });
+  przypisanieTasks(userId: number, tasks: Task[]): Observable<any> {
+
+    const payload = {
+      userId,
+      tasks
+    };
+
+    console.log('Payload wysyłany do backendu:', payload);
+
+    return this.http.post<boolean>(`${this.apiUrl}/PrzypisanieTask/${userId}`, payload);
   }
 
   getTasksByUser(userId: number): Observable<Task[]> {

@@ -29,21 +29,41 @@ export class AppComponent implements OnInit {
 
   constructor(private taskService: TaskService) { }
 
+  currentPage = 1;
+  pageSize = 10;
+
   ngOnInit(): void {
     this.loadAvailableTasks();
   }
 
+  showError(message: string, error: any): void {
+    const backendMsg = error?.error || 'Nieznany błąd.';
+    console.error(message, backendMsg);
+    alert(`${message}\n${backendMsg}`);
+  }
+
   loadAvailableTasks(): void {
-    this.taskService.getAllTasks().subscribe({
+    this.taskService.getAllTasks(this.currentPage, this.pageSize).subscribe({
       next: (tasks) => {
         this.availableTasks = tasks;
-        console.log('Dostępne zadania:', tasks);
       },
       error: (err) => {
         console.error('Błąd ładowania zadań:', err);
-        alert('Błąd ładowania zadań:\n' + JSON.stringify(err.error));
       },
     });
+  }
+
+  nextPage(): void {
+    this.currentPage++;
+    this.loadAvailableTasks();
+  }
+
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadAvailableTasks();
+    }
   }
 
   onUserSelected(user: User): void {
@@ -61,9 +81,37 @@ export class AppComponent implements OnInit {
   }
 
   onTaskSelect(task: Task): void {
-    if (!this.selectedTasks.includes(task)) {
+    const index = this.selectedTasks.findIndex(t => t.id === task.id);
+    if (index === -1) {
       this.selectedTasks.push(task);
-      console.log('Dodano zadanie do przypisania:', task);
+    } else {
+      this.selectedTasks.splice(index, 1); 
     }
   }
+
+  resetSelectedTasks(): void {
+    this.selectedTasks = [];
+  }
+
+
+  onAssignedTasks(): void {
+    this.selectedTasks = []; // wyczyść zaznaczenia
+
+    if (this.selectedUser) {
+      this.taskService.getTasksByUser(this.selectedUser.id).subscribe({
+        next: (tasks) => {
+          this.assignedTasks = tasks;
+          console.log('Przypisane zadania po przypisaniu:', tasks);
+
+         
+          this.loadAvailableTasks();
+        },
+        error: (err) => {
+          console.error(' Błąd odświeżania przypisanych zadań:', err);
+          alert('Nie udało się odświeżyć przypisanych zadań.');
+        }
+      });
+    }
+  }
+
 }

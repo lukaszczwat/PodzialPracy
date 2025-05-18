@@ -1,4 +1,5 @@
-﻿using PodzialPracy.Server.Data;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using PodzialPracy.Server.Data;
 
 /// <summary>
 /// Repozytorium do zarządzania zadaniami.
@@ -7,8 +8,9 @@ namespace PodzialPracy.Server.Repozytoria
 {
     public interface ITaskRepository
     {
-        IEnumerable<Modele.Task> GetAllTasks();
+        IEnumerable<Modele.Task> GetAllTasks(int page, int pageSize);
         IEnumerable<Modele.Task> GetTasksByUser(int userId);
+        Modele.Task? GetTaskById(int id);
 
         bool PrypisanieTask(int userId, List<Modele.Task> tasks);
 
@@ -22,11 +24,13 @@ namespace PodzialPracy.Server.Repozytoria
         /// Pobiera zadania, które mogą być przypisane użytkownikowi.
         /// </summary>
         /// <returns>Lista dostępnych zadań</returns>
-        public IEnumerable<Modele.Task> GetAllTasks()
+        public IEnumerable<Modele.Task> GetAllTasks(int page = 1, int pageSize = 10)
         {
-            return _tasks.Where(t => t.Status == Enum.TaskStatus.DoWykonania)
+            return _tasks
+                .Where(t => t.Status == Enum.TaskStatus.DoWykonania && t.UserId == null)
                 .OrderByDescending(t => t.SkalaTrudnosci)
-                .Take(10);
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
         }
 
         /// <summary>
@@ -36,32 +40,49 @@ namespace PodzialPracy.Server.Repozytoria
         /// <returns>Lista przypisanych zadań</returns>
         public IEnumerable<Modele.Task> GetTasksByUser(int userId)
         {
-            return _tasks.Where(t => t.UserId == userId)
+            return _tasks
+                .Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.SkalaTrudnosci)
                 .Take(10);
         }
 
-
         /// <summary>
         /// Przypisuje użytkownikowi wybrane zadania.
         /// </summary>
-        /// <param name="userId">Id użytkownika</param>
-        /// <param name="tasks">Lista zadań do przypisania</param>
-        /// <returns>True jeśli zadania zostały przypisane, False w przeciwnym razie</returns>
+
 
         public bool PrypisanieTask(int userId, List<Modele.Task> tasks)
         {
             foreach (var task in tasks)
             {
-                if (_tasks.Any(t => t.Id == task.Id)) return false;
+                var existing = _tasks.FirstOrDefault(t => t.Id == task.Id);
+                if (existing == null)
                 {
-                    var targetTask = _tasks.First(t => t.Id == task.Id);
-                    targetTask.Status = Enum.TaskStatus.Wykonane;
-                    targetTask.UserId = userId; 
+                    Console.WriteLine($"Zadanie o ID {task.Id} nie znalezione.");
+                    continue;
                 }
+
+                if (existing.Status != Enum.TaskStatus.DoWykonania)
+                {
+                    Console.WriteLine($"Zadanie {existing.Id} już przypisane. Pomijam.");
+                    continue;
+                }
+
+                existing.Status = Enum.TaskStatus.Wykonane;
+                existing.UserId = userId;
+                existing.TerminWdrozenia = task.TerminWdrozenia;
+
+                Console.WriteLine($"Przypisano zadanie {existing.Id} do użytkownika {userId}");
             }
 
+
             return true;
+        }
+
+
+        public Modele.Task? GetTaskById(int id)
+        {
+            return _tasks.FirstOrDefault(t => t.Id == id);
         }
     }
 }

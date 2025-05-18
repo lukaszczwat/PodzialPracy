@@ -1,11 +1,14 @@
 <h3>Lista dostępnych zadań</h3>
 
-<ul *ngIf="tasks.length > 0; else brakZadan">
-  <li *ngFor="let task of tasks" style="cursor: pointer;">
-    <strong>{{ task.tresc }}</strong> — Trudność: {{ task.skalaTrudnosci }} — Status: {{ task.status }}
-    <button (click)="selectTask(task)">Wybierz</button>
+<ol *ngIf="tasks.length > 0; else brakZadan">
+  <li *ngFor="let task of tasks" style="cursor: pointer;"
+    (click)="selectTask(task)"
+    [class.selected]="isSelected(task)"
+    >
+    {{ task.tresc }} — Trudność: {{ task.skalaTrudnosci }} — Status: {{ task.status }}
+   
   </li>
-</ul>
+</ol>
 
 <ng-template #brakZadan>
   <p>Brak dostępnych zadań do wyświetlenia.</p>

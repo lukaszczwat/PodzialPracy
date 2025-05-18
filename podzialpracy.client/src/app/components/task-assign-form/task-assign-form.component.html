@@ -1,6 +1,18 @@
 <h3>Przypisywanie zadań</h3>
 
+<div class="summary" *ngIf="liczbaZadan > 0">
+  <p><strong>Podsumowanie wyboru:</strong></p>
+  <ul>
+    <li>Liczba zadań: {{ liczbaZadan }}</li>
+    <li>Trudne zadania (Skala ≥ 4): {{ trudneZadania }} ({{ procentTrudnych * 100 | number:'1.0-0' }}%)</li>
+    <li>Łatwe zadania (Skala ≤ 2): {{ latweZadania }} ({{ procentLatwych * 100 | number:'1.0-0' }}%)</li>
+  </ul>
+</div>
+
 <label for="termin">Wybierz termin realizacji:</label>
 <input type="date" id="termin" [(ngModel)]="terminRealizacji">
 
 <button (click)="przypisanieTasks(userId)">Przypisz zadania</button>
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>

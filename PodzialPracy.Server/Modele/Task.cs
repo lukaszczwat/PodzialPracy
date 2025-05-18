@@ -1,4 +1,5 @@
 ﻿using PodzialPracy.Server.Enum;
+using System.Text.Json.Serialization;
 using TaskStatus = PodzialPracy.Server.Enum.TaskStatus;
 
 namespace PodzialPracy.Server.Modele
@@ -12,7 +13,11 @@ namespace PodzialPracy.Server.Modele
         public int Id { get; set; }
         public string Tresc { get; set; }
         public int SkalaTrudnosci { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TaskType Rodzaj { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TaskStatus Status { get; set; }
         public DateTime? TerminWdrozenia { get; set; }
 

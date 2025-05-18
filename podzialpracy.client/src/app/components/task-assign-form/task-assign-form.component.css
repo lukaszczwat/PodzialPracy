@@ -22,3 +22,17 @@ button {
   button:hover {
     background: #0056b3;
   }
+
+.error {
+  color: darkred;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.summary {
+  background-color: #f3f3f3;
+  border-left: 4px solid #007acc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}

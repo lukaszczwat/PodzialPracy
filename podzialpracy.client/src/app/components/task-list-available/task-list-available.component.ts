@@ -11,12 +11,16 @@ import { CommonModule } from '@angular/common';
 })
 export class TaskListAvailableComponent implements OnChanges {
   @Input() tasks: Task[] = [];
+  @Input() selectedTasks: Task[] = [];
   @Output() taskSelect = new EventEmitter<Task>();
 
   selectTask(task: Task) {
     this.taskSelect.emit(task);
   }
 
+  isSelected(task: Task): boolean {
+    return this.selectedTasks.some(t => t.id === task.id);
+  }
   
 
   ngOnChanges(changes: SimpleChanges): void {

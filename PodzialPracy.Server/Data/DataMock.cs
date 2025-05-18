@@ -21,7 +21,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 1,
                     Tresc = "Implementacja API",
-                    SkalaTrudnosci = 3,
+                    SkalaTrudnosci = 1,
                     Rodzaj = TaskType.Implementacja,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -29,7 +29,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 2,
                     Tresc = "Wdrożenie aplikacji",
-                    SkalaTrudnosci = 4,
+                    SkalaTrudnosci = 2,
                     Rodzaj = TaskType.Wdrożenie,
                     Status = TaskStatus.DoWykonania,
 
@@ -39,7 +39,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 3,
                     Tresc = "Utrzymanie systemu",
-                    SkalaTrudnosci = 2,
+                    SkalaTrudnosci = 3,
                     Rodzaj = TaskType.Maintanance,
                     Status = TaskStatus.Wykonane,
                 },
@@ -47,7 +47,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 4,
                     Tresc = "Testowanie aplikacji",
-                    SkalaTrudnosci = 5,
+                    SkalaTrudnosci = 4,
                     Rodzaj = TaskType.Implementacja,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -63,7 +63,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 6,
                     Tresc = "Szkolenie zespołu",
-                    SkalaTrudnosci = 3,
+                    SkalaTrudnosci = 2,
                     Rodzaj = TaskType.Wdrożenie,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -71,7 +71,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 7,
                     Tresc = "Przygotowanie prezentacji",
-                    SkalaTrudnosci = 2,
+                    SkalaTrudnosci = 3,
                     Rodzaj = TaskType.Implementacja,
                     Status = TaskStatus.Wykonane,
                 },
@@ -95,7 +95,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 10,
                     Tresc = "Zarządzanie projektem",
-                    SkalaTrudnosci = 3,
+                    SkalaTrudnosci = 1,
                     Rodzaj = TaskType.Wdrożenie,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -111,7 +111,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 12,
                     Tresc = "Planowanie sprintu",
-                    SkalaTrudnosci = 4,
+                    SkalaTrudnosci = 3,
                     Rodzaj = TaskType.Implementacja,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -119,7 +119,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 13,
                     Tresc = "Zarządzanie ryzykiem",
-                    SkalaTrudnosci = 5,
+                    SkalaTrudnosci = 4,
                     Rodzaj = TaskType.Wdrożenie,
                     Status = TaskStatus.Wykonane,
                 },
@@ -127,7 +127,7 @@ namespace PodzialPracy.Server.Data
                 {
                     Id = 14,
                     Tresc = "Integracja systemu",
-                    SkalaTrudnosci = 3,
+                    SkalaTrudnosci = 5,
                     Rodzaj = TaskType.Maintanance,
                     Status = TaskStatus.DoWykonania,
                 },
@@ -138,7 +138,31 @@ namespace PodzialPracy.Server.Data
                     SkalaTrudnosci = 2,
                     Rodzaj = TaskType.Implementacja,
                     Status = TaskStatus.Wykonane,
-                }
+                },
+                new Modele.Task
+                {
+                    Id = 16,
+                    Tresc = "Zarządzanie budżetem",
+                    SkalaTrudnosci = 3,
+                    Rodzaj = TaskType.Wdrożenie,
+                    Status = TaskStatus.DoWykonania,
+                },
+                new Modele.Task
+                {
+                    Id = 17,
+                    Tresc = "Zarządzanie interesariuszami",
+                    SkalaTrudnosci = 4,
+                    Rodzaj = TaskType.Maintanance,
+                    Status = TaskStatus.DoWykonania,
+                },
+                new Modele.Task
+                {
+                    Id = 18,
+                    Tresc = "Zarządzanie jakością",
+                    SkalaTrudnosci = 5,
+                    Rodzaj = TaskType.Implementacja,
+                    Status = TaskStatus.DoWykonania,
+                },
             };
 
         }

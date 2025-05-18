@@ -18,6 +18,7 @@
     <div class="task-section">
       <h2>Zadania dostępne</h2>
       <app-task-list-available [tasks]="availableTasks"
+                               [selectedTasks]="selectedTasks"
                                (taskSelect)="onTaskSelect($event)">
       </app-task-list-available>
     </div>
@@ -25,8 +26,21 @@
 
   <!-- Formularz przypisania -->
   <div *ngIf="selectedUser">
-    <app-task-assign-form [selectedTasks]="selectedTasks"
-                          [userId]="selectedUser.id">
+    <app-task-assign-form
+                          *ngIf="selectedUser"
+                          [selectedTasks]="selectedTasks"
+                          [userId]="selectedUser.id"
+                          (onAssigned)="onAssignedTasks()">
     </app-task-assign-form>
   </div>
+</div>
+
+<button (click)="resetSelectedTasks()" *ngIf="selectedTasks.length > 0">
+  Resetuj wybór zadań
+</button>
+
+<div class="pagination-controls">
+  <button (click)="previousPage()" [disabled]="currentPage === 1">Poprzednia</button>
+  <span>Strona {{ currentPage }}</span>
+  <button (click)="nextPage()">Następna</button>
 </div>

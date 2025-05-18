@@ -1,4 +1,5 @@
 ﻿using PodzialPracy.Server.Enum;
+using System.Text.Json.Serialization;
 
 namespace PodzialPracy.Server.Modele
 {
@@ -11,6 +12,8 @@ namespace PodzialPracy.Server.Modele
         public int Id { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UserType Typ { get; set; }
                 
     }

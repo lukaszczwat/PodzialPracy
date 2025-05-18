@@ -25,9 +25,9 @@ namespace PodzialPracy.Server.Serwis
         /// Pobiera listę dostępnych zadań do przypisania.
         /// </summary>
         /// <returns>Lista dostępnych zadań</returns>
-        public IEnumerable<Modele.Task> GetAllTasks()
+        public IEnumerable<Modele.Task> GetAllTasks(int page, int pageSize)
         {
-            return _taskRepository.GetAllTasks();
+            return _taskRepository.GetAllTasks(page, pageSize);
         }
 
         /// <summary>
@@ -50,25 +50,52 @@ namespace PodzialPracy.Server.Serwis
 
         public bool PrypisanieTask(int userId, List<Modele.Task> tasks)
         {
-
-            if(tasks.Count <5 || tasks.Count > 11)
-            {
+            if (tasks == null || tasks.Count < 5 || tasks.Count > 11)
                 throw new ArgumentException("Liczba zadań do przypisania musi być pomiędzy 5 a 11.");
+
+            int trudne = tasks.Count(t => t.SkalaTrudnosci >= 4);
+            int latwe = tasks.Count(t => t.SkalaTrudnosci <= 2);
+
+            double procentTrudne = (double)trudne / tasks.Count;
+            double procentLatwe = (double)latwe / tasks.Count;
+
+            if (procentTrudne < 0.1 || procentTrudne > 0.3)
+                throw new ArgumentException("Nieprawidłowa liczba trudnych zadań (10–30%).");
+
+            if (procentLatwe > 0.5)
+                throw new ArgumentException("Nieprawidłowa liczba łatwych zadań (maks. 50%).");
+
+            Console.WriteLine($"Otrzymano {tasks.Count} zadań do przypisania.");
+
+            // Przypisz zadania
+            foreach (var task in tasks)
+            {
+                var existing = _taskRepository.GetTaskById(task.Id);
+                if (existing == null)
+                {
+                    Console.WriteLine($"Zadanie {task.Id} nie istnieje.");
+                    continue;
+                }
+
+                if (existing.Status != Enum.TaskStatus.DoWykonania)
+                {
+                    Console.WriteLine($"Zadanie {existing.Id} ma status {existing.Status}, nie można przypisać.");
+                    continue;
+                }
+
+                existing.Status = Enum.TaskStatus.Wykonane;
+                existing.UserId = userId;
+
+                if (task.TerminWdrozenia.HasValue)
+                    existing.TerminWdrozenia = task.TerminWdrozenia;
+
+                Console.WriteLine($"Przypisano zadanie {existing.Id} do użytkownika {userId}");
             }
 
-            int wysokiPoziomTrudnosci = tasks.Count(t => t.SkalaTrudnosci >= 4);
-            int niskiPoziomTrudnosci = tasks.Count(t => t.SkalaTrudnosci <= 2);
-
-
-            if(wysokiPoziomTrudnosci <tasks.Count * 0.1 || wysokiPoziomTrudnosci >tasks.Count *0.3)
-                throw new ArgumentException("Nieprawidłowa liczba trudnych zadań");
-
-            if(niskiPoziomTrudnosci >tasks.Count * 0.5)
-                throw new ArgumentException("Nieprawidłowa liczba łatwych zadań");
-
-
-            return _taskRepository.PrypisanieTask(userId, tasks);
+            return true;
         }
+
+
 
 
     }
